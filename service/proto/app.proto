@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package goMicro.srv.order;
+
+service Order {
+    rpc CreateOrder (OrderInfo) returns (Response);
+    rpc QueryOrders (OrderInfo) returns (Response);
+    rpc QueryOrder (OrderInfo) returns (Response);
+    rpc UpdateOrder (OrderInfo) returns (Response);
+    rpc DeleteOrder (OrderInfo) returns (Response);
+}
+
+
+message OrderInfo {
+    string location = 1;
+    string hold_time = 2;
+    string preheat_time = 3;
+    string push_range = 4;
+    string token = 5;
+    string id = 6;
+}
+
+message Response {
+    int32 errCode = 1;
+    string errMsg = 2;
+    string info = 3;
+}
