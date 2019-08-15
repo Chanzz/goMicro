@@ -1,11 +1,17 @@
 package common
 
-import "github.com/gomodule/redigo/redis"
+import (
+	"github.com/gomodule/redigo/redis"
+	"log"
+)
 
 const CONFIG_FILE = "config.ini"
 
 func ConnectRedis() redis.Conn {
-	conn, _ := redis.Dial("tcp", "127.0.0.1:6379")
+	conn, err := redis.Dial("tcp", "127.0.0.1:6379")
+	if err != nil {
+		log.Println(err)
+	}
 	return conn
 }
 

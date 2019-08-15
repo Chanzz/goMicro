@@ -78,7 +78,7 @@ func (d *AppDao) QueryOrders(ctx context.Context, in *proto.OrderInfo, out *prot
 		var id string
 		var submit_time string
 		err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
-		info += "{\"location\":\"" + location + "\",\"hold_time\":\"" + hold_time + "\",\"preheat_time\":\"" + preheat_time + "\",\"push_range\":\"" + push_range + "\",\"submit_time\":\"" + submit_time + "\",\"id\":\"" + id + "\"},"
+		info += "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'},"
 	}
 	info += "]"
 	out.Info = info
@@ -87,7 +87,7 @@ func (d *AppDao) QueryOrders(ctx context.Context, in *proto.OrderInfo, out *prot
 	return nil
 }
 func (d *AppDao) QueryOrder(ctx context.Context, in *proto.OrderInfo, out *proto.Response) error {
-	sql := "SELECT * FROM order_info WHERE id=?,userid=?"
+	sql := "SELECT * FROM order_info WHERE id=? AND userid=?"
 	rows, err := d.DB.Query(sql, in.Id, in.Token[0:32])
 	defer rows.Close()
 	if err != nil {
@@ -105,7 +105,7 @@ func (d *AppDao) QueryOrder(ctx context.Context, in *proto.OrderInfo, out *proto
 		var id string
 		var submit_time string
 		err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
-		info = "{\"location\":\"" + location + "\",\"hold_time\":\"" + hold_time + "\",\"preheat_time\":\"" + preheat_time + "\",\"push_range\":\"" + push_range + "\",\"submit_time\":\"" + submit_time + "\",\"id\":\"" + id + "\"}"
+		info = "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'}"
 	}
 	out.Info = info
 	out.ErrMsg = "查询成功"
