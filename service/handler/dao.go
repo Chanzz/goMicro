@@ -4,27 +4,28 @@ import (
 	"context"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"goMicro/service/common"
 	proto "goMicro/service/proto"
 	"log"
 )
 
 type AppDao struct {
-	DB *sql.DB // 数据库镜像实例，类似于 SessionFactory
+	DB *sql.DB
 }
 
 func (d *AppDao) CreateOrder(ctx context.Context, in *proto.OrderInfo, out *proto.Response) error {
 	sql := "INSERT INTO order_info(userid,location,hold_time,preheat_time,push_range) VALUES(?,?,?,?,?)"
-	//if len(in.Token)!=64 {
-	//	out.ErrMsg = "token格式错误"
-	//	out.RetCode = 300
-	//	return nil
-	//}
+	message := "{\"userid\":\"" + in.Token[0:32] + "\",\"location\":\"" + in.Location + "\",\"hold_time\":\"" + in.HoldTime + "\",\"preheat_time\":\"" + in.PreheatTime + "\",\"push_range\":\"" + in.PushRange + "\"}"
 	_, err := d.DB.Exec(sql, in.Token[0:32], in.Location, in.HoldTime, in.PreheatTime, in.PushRange)
-	log.Println(err)
 	if err != nil {
 		log.Println(err)
 		out.ErrMsg = err.Error()
 		out.ErrCode = 400
+	}
+	conn := common.ConnectRedis()
+	_, err1 := conn.Do("PUBLISH", "change_word", message)
+	if err1 != nil {
+		log.Println(err1)
 	}
 	out.ErrMsg = "提交成功"
 	out.ErrCode = 200
@@ -32,8 +33,8 @@ func (d *AppDao) CreateOrder(ctx context.Context, in *proto.OrderInfo, out *prot
 }
 
 func (d *AppDao) UpdateOrder(ctx context.Context, in *proto.OrderInfo, out *proto.Response) error {
-	sql := "UPDATE order_info SET location=?,hold_time=?,preheat_time=?,push_range=? WHERE id=?"
-	_, err := d.DB.Exec(sql, in.Location, in.HoldTime, in.PreheatTime, in.PushRange, in.Id)
+	update_sql := "UPDATE order_info SET location=?,hold_time=?,preheat_time=?,push_range=? WHERE id=? AND userid=?"
+	_, err := d.DB.Exec(update_sql, in.Location, in.HoldTime, in.PreheatTime, in.PushRange, in.Id, in.Token[0:32])
 	if err != nil {
 		log.Println(err)
 		out.ErrMsg = err.Error()
@@ -45,8 +46,8 @@ func (d *AppDao) UpdateOrder(ctx context.Context, in *proto.OrderInfo, out *prot
 }
 
 func (d *AppDao) DeleteOrder(ctx context.Context, in *proto.OrderInfo, out *proto.Response) error {
-	sql := "DELETE FROM order_info where id=?"
-	_, err := d.DB.Exec(sql, in.Id)
+	delete_sql := "DELETE FROM order_info where id=? AND userid=?"
+	_, err := d.DB.Exec(delete_sql, in.Id, in.Token[0:32])
 	if err != nil {
 		log.Println(err)
 		out.ErrMsg = "删除失败"
@@ -58,8 +59,8 @@ func (d *AppDao) DeleteOrder(ctx context.Context, in *proto.OrderInfo, out *prot
 }
 
 func (d *AppDao) QueryOrders(ctx context.Context, in *proto.OrderInfo, out *proto.Response) error {
-	sql := "SELECT * FROM order_info"
-	rows, err := d.DB.Query(sql)
+	sql := "SELECT * FROM order_info WHERE userid=?"
+	rows, err := d.DB.Query(sql, in.Token[0:32])
 	defer rows.Close()
 	if err != nil {
 		log.Println(err)
@@ -77,7 +78,7 @@ func (d *AppDao) QueryOrders(ctx context.Context, in *proto.OrderInfo, out *prot
 		var id string
 		var submit_time string
 		err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
-		info += "{'location':" + location + ",'hold_time':" + hold_time + ",'preheat_time':" + preheat_time + ",'push_range':" + push_range + ",'submit_time':" + submit_time + ",'id':" + id + "},"
+		info += "{\"location\":\"" + location + "\",\"hold_time\":\"" + hold_time + "\",\"preheat_time\":\"" + preheat_time + "\",\"push_range\":\"" + push_range + "\",\"submit_time\":\"" + submit_time + "\",\"id\":\"" + id + "\"},"
 	}
 	info += "]"
 	out.Info = info
@@ -86,8 +87,8 @@ func (d *AppDao) QueryOrders(ctx context.Context, in *proto.OrderInfo, out *prot
 	return nil
 }
 func (d *AppDao) QueryOrder(ctx context.Context, in *proto.OrderInfo, out *proto.Response) error {
-	sql := "SELECT * FROM order_info WHERE id=?"
-	rows, err := d.DB.Query(sql, in.Id)
+	sql := "SELECT * FROM order_info WHERE id=?,userid=?"
+	rows, err := d.DB.Query(sql, in.Id, in.Token[0:32])
 	defer rows.Close()
 	if err != nil {
 		log.Println(err)
@@ -104,11 +105,10 @@ func (d *AppDao) QueryOrder(ctx context.Context, in *proto.OrderInfo, out *proto
 		var id string
 		var submit_time string
 		err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
-		info = "{'location':" + location + ",'hold_time':" + hold_time + ",'preheat_time':" + preheat_time + ",'push_range':" + push_range + ",'submit_time':" + submit_time + ",'id':" + id + "}"
+		info = "{\"location\":\"" + location + "\",\"hold_time\":\"" + hold_time + "\",\"preheat_time\":\"" + preheat_time + "\",\"push_range\":\"" + push_range + "\",\"submit_time\":\"" + submit_time + "\",\"id\":\"" + id + "\"}"
 	}
 	out.Info = info
 	out.ErrMsg = "查询成功"
 	out.ErrCode = 200
-
 	return nil
 }

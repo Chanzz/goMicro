@@ -1,11 +1,16 @@
 package common
 
+import "github.com/gomodule/redigo/redis"
+
 const CONFIG_FILE = "config.ini"
 
+func ConnectRedis() redis.Conn {
+	conn, _ := redis.Dial("tcp", "127.0.0.1:6379")
+	return conn
+}
 
 //var m *AppConfig
 //var once sync.Once // go 的并发包 sync 里的工具类，保证某个操作只能执行一次
-
 //type AppConfig struct {
 //	MySql struct{
 //		User string `yaml:"user"` // yaml 的元数据，定义了怎么解析 yaml 文件

@@ -5,8 +5,6 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql" // 这个意思是要执行 mysql 该包下的文件里所有init()函数，但不会打包这个包，所以无法通过包名来调用包中的其他函数
 	"goMicro/service/common"
-
-	//"goMicro/service/common"
 	"log"
 	"time"
 )
@@ -15,7 +13,7 @@ const SECTION = "database"
 
 var DB *sql.DB
 
-func CreateMySqlConnection() (*sql.DB) {
+func CreateMySqlConnection() *sql.DB {
 	var err error
 	configMap := common.GetConfigMap(SECTION)
 	name := configMap["name"]
@@ -29,7 +27,6 @@ func CreateMySqlConnection() (*sql.DB) {
 	DB.SetMaxIdleConns(25)
 	DB.SetMaxOpenConns(50)
 	if err != nil {
-
 		log.Print(err)
 	}
 	err = DB.Ping()
