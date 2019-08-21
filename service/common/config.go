@@ -1,8 +1,11 @@
 package common
 
 import (
+	"crypto/md5"
+	"fmt"
 	"github.com/gomodule/redigo/redis"
 	"log"
+	"strings"
 )
 
 const CONFIG_FILE = "config.ini"
@@ -13,6 +16,12 @@ func ConnectRedis() redis.Conn {
 		log.Println(err)
 	}
 	return conn
+}
+func GenerateMD5(str string) string {
+	data := []byte(str)
+	md5Bytes := md5.Sum(data)
+	md5Str := fmt.Sprintf("%x", md5Bytes) //将[]byte转成16进制
+	return strings.ToUpper(md5Str)
 }
 
 //var m *AppConfig

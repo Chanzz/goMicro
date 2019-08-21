@@ -69,13 +69,13 @@ func new_word(message []byte) string {
 		rows1, _ := db.Query(sql1, manufacturer_id)
 		for rows1.Next() {
 			err = rows1.Scan(&manufacturer_name)
-			user_info = "品牌名称 " + manufacturer_name + "  用户名称 " + user_name + "  用户公司 " + user_company + "  联系方式 " + phone
+			user_info = "品牌名称： " + manufacturer_name + "  用户名称： " + user_name + "  用户公司： " + user_company + "  联系方式： " + phone
 		}
 	}
 	doc := document.New()
 	para := doc.AddParagraph()
 	para.SetStyle("Subtitle")
-	para.AddRun().AddText("用户信息：" + user_info)
+	para.AddRun().AddText(user_info)
 	para = doc.AddParagraph()
 	para.AddRun().AddText("活动地点：" + order_info.Location)
 	para = doc.AddParagraph()

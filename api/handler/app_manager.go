@@ -86,3 +86,32 @@ func (a *AppManager) DeleteOrder(c *gin.Context) {
 	resp := client.DeleteOrder(orderInfo)
 	c.JSON(200, resp)
 }
+func (a *AppManager) Login(c *gin.Context) {
+	var loginInfo appProto.LoginInfo
+	loginInfo.Ip = c.ClientIP()
+	if err := c.ShouldBindJSON(&loginInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.Login(loginInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) SendCode(c *gin.Context) {
+	var loginInfo appProto.LoginInfo
+	if err := c.ShouldBindJSON(&loginInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.SendCode(loginInfo)
+	c.JSON(200, resp)
+}

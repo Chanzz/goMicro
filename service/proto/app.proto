@@ -8,6 +8,8 @@ service Order {
     rpc QueryOrder (OrderInfo) returns (Response);
     rpc UpdateOrder (OrderInfo) returns (Response);
     rpc DeleteOrder (OrderInfo) returns (Response);
+    rpc Login (LoginInfo) returns (Response);
+    rpc SendCode (LoginInfo) returns (Response);
 }
 
 
@@ -25,3 +27,11 @@ message Response {
     string errMsg = 2;
     string info = 3;
 }
+message LoginInfo{
+    string phone_num=1;
+    string code=2;
+    string ip=3;
+}
+//message LoginResponse{
+//{"city":"广州","is_admin":"否","manufacturer_id":"4974a28ef6","manufacturer_name":"ALPINA","market_level":"B-M","market_type":"m_classify","province":"","status_code":0,"token":"67644D34E7EE3807D4CAEDE49A204FF79B759040321A408A5C7768B4511287A6","user_end_time":"2022-08-01"}
+//}

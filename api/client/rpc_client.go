@@ -70,3 +70,21 @@ func DeleteOrder(orderId appProto.OrderInfo) *appProto.Response {
 	}
 	return resp
 }
+func Login(loginInfo appProto.LoginInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : Login")
+	resp, err := appService.Login(context.TODO(), &loginInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func SendCode(loginInfo appProto.LoginInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : SendCode")
+	resp, err := appService.SendCode(context.TODO(), &loginInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}

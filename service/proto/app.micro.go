@@ -39,6 +39,8 @@ type OrderService interface {
 	QueryOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
 	UpdateOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
 	DeleteOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
+	Login(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error)
+	SendCode(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error)
 }
 
 type orderService struct {
@@ -109,6 +111,26 @@ func (c *orderService) DeleteOrder(ctx context.Context, in *OrderInfo, opts ...c
 	return out, nil
 }
 
+func (c *orderService) Login(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.Login", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) SendCode(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.SendCode", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Order service
 
 type OrderHandler interface {
@@ -117,6 +139,8 @@ type OrderHandler interface {
 	QueryOrder(context.Context, *OrderInfo, *Response) error
 	UpdateOrder(context.Context, *OrderInfo, *Response) error
 	DeleteOrder(context.Context, *OrderInfo, *Response) error
+	Login(context.Context, *LoginInfo, *Response) error
+	SendCode(context.Context, *LoginInfo, *Response) error
 }
 
 func RegisterOrderHandler(s server.Server, hdlr OrderHandler, opts ...server.HandlerOption) error {
@@ -126,6 +150,8 @@ func RegisterOrderHandler(s server.Server, hdlr OrderHandler, opts ...server.Han
 		QueryOrder(ctx context.Context, in *OrderInfo, out *Response) error
 		UpdateOrder(ctx context.Context, in *OrderInfo, out *Response) error
 		DeleteOrder(ctx context.Context, in *OrderInfo, out *Response) error
+		Login(ctx context.Context, in *LoginInfo, out *Response) error
+		SendCode(ctx context.Context, in *LoginInfo, out *Response) error
 	}
 	type Order struct {
 		order
@@ -156,4 +182,12 @@ func (h *orderHandler) UpdateOrder(ctx context.Context, in *OrderInfo, out *Resp
 
 func (h *orderHandler) DeleteOrder(ctx context.Context, in *OrderInfo, out *Response) error {
 	return h.OrderHandler.DeleteOrder(ctx, in, out)
+}
+
+func (h *orderHandler) Login(ctx context.Context, in *LoginInfo, out *Response) error {
+	return h.OrderHandler.Login(ctx, in, out)
+}
+
+func (h *orderHandler) SendCode(ctx context.Context, in *LoginInfo, out *Response) error {
+	return h.OrderHandler.SendCode(ctx, in, out)
 }
