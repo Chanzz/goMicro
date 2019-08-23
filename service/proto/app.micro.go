@@ -34,11 +34,26 @@ var _ server.Option
 // Client API for Order service
 
 type OrderService interface {
-	CreateOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
-	QueryOrders(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
-	QueryOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
-	UpdateOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
-	DeleteOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error)
+	CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
+	QueryDingDianTuis(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
+	QueryDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
+	UpdateDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
+	DeleteDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
+	CreateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error)
+	QueryKeLiuJings(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error)
+	QueryKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error)
+	UpdateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error)
+	DeleteKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error)
+	CreateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error)
+	QueryChaoShiXins(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error)
+	QueryChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error)
+	UpdateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error)
+	DeleteChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error)
+	CreateAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
+	QueryAIYunHus(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
+	QueryAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
+	UpdateAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
+	DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
 	Login(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error)
 	SendCode(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error)
 }
@@ -61,8 +76,8 @@ func NewOrderService(name string, c client.Client) OrderService {
 	}
 }
 
-func (c *orderService) CreateOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Order.CreateOrder", in)
+func (c *orderService) CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreateDingDianTui", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -71,8 +86,8 @@ func (c *orderService) CreateOrder(ctx context.Context, in *OrderInfo, opts ...c
 	return out, nil
 }
 
-func (c *orderService) QueryOrders(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Order.QueryOrders", in)
+func (c *orderService) QueryDingDianTuis(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryDingDianTuis", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -81,8 +96,8 @@ func (c *orderService) QueryOrders(ctx context.Context, in *OrderInfo, opts ...c
 	return out, nil
 }
 
-func (c *orderService) QueryOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Order.QueryOrder", in)
+func (c *orderService) QueryDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryDingDianTui", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -91,8 +106,8 @@ func (c *orderService) QueryOrder(ctx context.Context, in *OrderInfo, opts ...cl
 	return out, nil
 }
 
-func (c *orderService) UpdateOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Order.UpdateOrder", in)
+func (c *orderService) UpdateDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdateDingDianTui", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -101,8 +116,158 @@ func (c *orderService) UpdateOrder(ctx context.Context, in *OrderInfo, opts ...c
 	return out, nil
 }
 
-func (c *orderService) DeleteOrder(ctx context.Context, in *OrderInfo, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "Order.DeleteOrder", in)
+func (c *orderService) DeleteDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeleteDingDianTui", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) CreateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreateKeLiuJing", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryKeLiuJings(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryKeLiuJings", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryKeLiuJing", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) UpdateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdateKeLiuJing", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) DeleteKeLiuJing(ctx context.Context, in *KeLiuJingInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeleteKeLiuJing", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) CreateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreateChaoShiXin", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryChaoShiXins(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryChaoShiXins", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryChaoShiXin", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) UpdateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdateChaoShiXin", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) DeleteChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeleteChaoShiXin", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) CreateAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreateAIYunHu", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryAIYunHus(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryAIYunHus", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryAIYunHu", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) UpdateAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdateAIYunHu", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeleteAIYunHu", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -134,22 +299,52 @@ func (c *orderService) SendCode(ctx context.Context, in *LoginInfo, opts ...clie
 // Server API for Order service
 
 type OrderHandler interface {
-	CreateOrder(context.Context, *OrderInfo, *Response) error
-	QueryOrders(context.Context, *OrderInfo, *Response) error
-	QueryOrder(context.Context, *OrderInfo, *Response) error
-	UpdateOrder(context.Context, *OrderInfo, *Response) error
-	DeleteOrder(context.Context, *OrderInfo, *Response) error
+	CreateDingDianTui(context.Context, *DingDianTuiInfo, *Response) error
+	QueryDingDianTuis(context.Context, *DingDianTuiInfo, *Response) error
+	QueryDingDianTui(context.Context, *DingDianTuiInfo, *Response) error
+	UpdateDingDianTui(context.Context, *DingDianTuiInfo, *Response) error
+	DeleteDingDianTui(context.Context, *DingDianTuiInfo, *Response) error
+	CreateKeLiuJing(context.Context, *KeLiuJingInfo, *Response) error
+	QueryKeLiuJings(context.Context, *KeLiuJingInfo, *Response) error
+	QueryKeLiuJing(context.Context, *KeLiuJingInfo, *Response) error
+	UpdateKeLiuJing(context.Context, *KeLiuJingInfo, *Response) error
+	DeleteKeLiuJing(context.Context, *KeLiuJingInfo, *Response) error
+	CreateChaoShiXin(context.Context, *ChaoShiXinInfo, *Response) error
+	QueryChaoShiXins(context.Context, *ChaoShiXinInfo, *Response) error
+	QueryChaoShiXin(context.Context, *ChaoShiXinInfo, *Response) error
+	UpdateChaoShiXin(context.Context, *ChaoShiXinInfo, *Response) error
+	DeleteChaoShiXin(context.Context, *ChaoShiXinInfo, *Response) error
+	CreateAIYunHu(context.Context, *AIYunHuInfo, *Response) error
+	QueryAIYunHus(context.Context, *AIYunHuInfo, *Response) error
+	QueryAIYunHu(context.Context, *AIYunHuInfo, *Response) error
+	UpdateAIYunHu(context.Context, *AIYunHuInfo, *Response) error
+	DeleteAIYunHu(context.Context, *AIYunHuInfo, *Response) error
 	Login(context.Context, *LoginInfo, *Response) error
 	SendCode(context.Context, *LoginInfo, *Response) error
 }
 
 func RegisterOrderHandler(s server.Server, hdlr OrderHandler, opts ...server.HandlerOption) error {
 	type order interface {
-		CreateOrder(ctx context.Context, in *OrderInfo, out *Response) error
-		QueryOrders(ctx context.Context, in *OrderInfo, out *Response) error
-		QueryOrder(ctx context.Context, in *OrderInfo, out *Response) error
-		UpdateOrder(ctx context.Context, in *OrderInfo, out *Response) error
-		DeleteOrder(ctx context.Context, in *OrderInfo, out *Response) error
+		CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error
+		QueryDingDianTuis(ctx context.Context, in *DingDianTuiInfo, out *Response) error
+		QueryDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error
+		UpdateDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error
+		DeleteDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error
+		CreateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error
+		QueryKeLiuJings(ctx context.Context, in *KeLiuJingInfo, out *Response) error
+		QueryKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error
+		UpdateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error
+		DeleteKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error
+		CreateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error
+		QueryChaoShiXins(ctx context.Context, in *ChaoShiXinInfo, out *Response) error
+		QueryChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error
+		UpdateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error
+		DeleteChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error
+		CreateAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error
+		QueryAIYunHus(ctx context.Context, in *AIYunHuInfo, out *Response) error
+		QueryAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error
+		UpdateAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error
+		DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error
 		Login(ctx context.Context, in *LoginInfo, out *Response) error
 		SendCode(ctx context.Context, in *LoginInfo, out *Response) error
 	}
@@ -164,24 +359,84 @@ type orderHandler struct {
 	OrderHandler
 }
 
-func (h *orderHandler) CreateOrder(ctx context.Context, in *OrderInfo, out *Response) error {
-	return h.OrderHandler.CreateOrder(ctx, in, out)
+func (h *orderHandler) CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error {
+	return h.OrderHandler.CreateDingDianTui(ctx, in, out)
 }
 
-func (h *orderHandler) QueryOrders(ctx context.Context, in *OrderInfo, out *Response) error {
-	return h.OrderHandler.QueryOrders(ctx, in, out)
+func (h *orderHandler) QueryDingDianTuis(ctx context.Context, in *DingDianTuiInfo, out *Response) error {
+	return h.OrderHandler.QueryDingDianTuis(ctx, in, out)
 }
 
-func (h *orderHandler) QueryOrder(ctx context.Context, in *OrderInfo, out *Response) error {
-	return h.OrderHandler.QueryOrder(ctx, in, out)
+func (h *orderHandler) QueryDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error {
+	return h.OrderHandler.QueryDingDianTui(ctx, in, out)
 }
 
-func (h *orderHandler) UpdateOrder(ctx context.Context, in *OrderInfo, out *Response) error {
-	return h.OrderHandler.UpdateOrder(ctx, in, out)
+func (h *orderHandler) UpdateDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error {
+	return h.OrderHandler.UpdateDingDianTui(ctx, in, out)
 }
 
-func (h *orderHandler) DeleteOrder(ctx context.Context, in *OrderInfo, out *Response) error {
-	return h.OrderHandler.DeleteOrder(ctx, in, out)
+func (h *orderHandler) DeleteDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error {
+	return h.OrderHandler.DeleteDingDianTui(ctx, in, out)
+}
+
+func (h *orderHandler) CreateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error {
+	return h.OrderHandler.CreateKeLiuJing(ctx, in, out)
+}
+
+func (h *orderHandler) QueryKeLiuJings(ctx context.Context, in *KeLiuJingInfo, out *Response) error {
+	return h.OrderHandler.QueryKeLiuJings(ctx, in, out)
+}
+
+func (h *orderHandler) QueryKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error {
+	return h.OrderHandler.QueryKeLiuJing(ctx, in, out)
+}
+
+func (h *orderHandler) UpdateKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error {
+	return h.OrderHandler.UpdateKeLiuJing(ctx, in, out)
+}
+
+func (h *orderHandler) DeleteKeLiuJing(ctx context.Context, in *KeLiuJingInfo, out *Response) error {
+	return h.OrderHandler.DeleteKeLiuJing(ctx, in, out)
+}
+
+func (h *orderHandler) CreateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error {
+	return h.OrderHandler.CreateChaoShiXin(ctx, in, out)
+}
+
+func (h *orderHandler) QueryChaoShiXins(ctx context.Context, in *ChaoShiXinInfo, out *Response) error {
+	return h.OrderHandler.QueryChaoShiXins(ctx, in, out)
+}
+
+func (h *orderHandler) QueryChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error {
+	return h.OrderHandler.QueryChaoShiXin(ctx, in, out)
+}
+
+func (h *orderHandler) UpdateChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error {
+	return h.OrderHandler.UpdateChaoShiXin(ctx, in, out)
+}
+
+func (h *orderHandler) DeleteChaoShiXin(ctx context.Context, in *ChaoShiXinInfo, out *Response) error {
+	return h.OrderHandler.DeleteChaoShiXin(ctx, in, out)
+}
+
+func (h *orderHandler) CreateAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error {
+	return h.OrderHandler.CreateAIYunHu(ctx, in, out)
+}
+
+func (h *orderHandler) QueryAIYunHus(ctx context.Context, in *AIYunHuInfo, out *Response) error {
+	return h.OrderHandler.QueryAIYunHus(ctx, in, out)
+}
+
+func (h *orderHandler) QueryAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error {
+	return h.OrderHandler.QueryAIYunHu(ctx, in, out)
+}
+
+func (h *orderHandler) UpdateAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error {
+	return h.OrderHandler.UpdateAIYunHu(ctx, in, out)
+}
+
+func (h *orderHandler) DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error {
+	return h.OrderHandler.DeleteAIYunHu(ctx, in, out)
 }
 
 func (h *orderHandler) Login(ctx context.Context, in *LoginInfo, out *Response) error {

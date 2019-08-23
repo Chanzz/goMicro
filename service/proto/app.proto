@@ -3,25 +3,73 @@ syntax = "proto3";
 package goMicro.srv.order;
 
 service Order {
-    rpc CreateOrder (OrderInfo) returns (Response);
-    rpc QueryOrders (OrderInfo) returns (Response);
-    rpc QueryOrder (OrderInfo) returns (Response);
-    rpc UpdateOrder (OrderInfo) returns (Response);
-    rpc DeleteOrder (OrderInfo) returns (Response);
+    rpc CreateDingDianTui (DingDianTuiInfo) returns (Response);
+    rpc QueryDingDianTuis (DingDianTuiInfo) returns (Response);
+    rpc QueryDingDianTui (DingDianTuiInfo) returns (Response);
+    rpc UpdateDingDianTui (DingDianTuiInfo) returns (Response);
+    rpc DeleteDingDianTui (DingDianTuiInfo) returns (Response);
+    rpc CreateKeLiuJing (KeLiuJingInfo) returns (Response);
+    rpc QueryKeLiuJings (KeLiuJingInfo) returns (Response);
+    rpc QueryKeLiuJing (KeLiuJingInfo) returns (Response);
+    rpc UpdateKeLiuJing (KeLiuJingInfo) returns (Response);
+    rpc DeleteKeLiuJing (KeLiuJingInfo) returns (Response);
+    rpc CreateChaoShiXin (ChaoShiXinInfo) returns (Response);
+    rpc QueryChaoShiXins (ChaoShiXinInfo) returns (Response);
+    rpc QueryChaoShiXin (ChaoShiXinInfo) returns (Response);
+    rpc UpdateChaoShiXin (ChaoShiXinInfo) returns (Response);
+    rpc DeleteChaoShiXin (ChaoShiXinInfo) returns (Response);
+    rpc CreateAIYunHu (AIYunHuInfo) returns (Response);
+    rpc QueryAIYunHus (AIYunHuInfo) returns (Response);
+    rpc QueryAIYunHu (AIYunHuInfo) returns (Response);
+    rpc UpdateAIYunHu (AIYunHuInfo) returns (Response);
+    rpc DeleteAIYunHu (AIYunHuInfo) returns (Response);
     rpc Login (LoginInfo) returns (Response);
     rpc SendCode (LoginInfo) returns (Response);
 }
 
 
-message OrderInfo {
+message DingDianTuiInfo {
     string location = 1;
     string hold_time = 2;
     string preheat_time = 3;
     string push_range = 4;
+    string phone = 5;
+    string token = 6;
+    string id = 7;
+}
+message KeLiuJingInfo {
+    string monitor_area = 1;
+    string version = 2;
+    string name = 3;
+    string phone = 4;
     string token = 5;
     string id = 6;
 }
+message ChaoShiXinInfo {
+    string send_num = 1;
+    string send_time = 2;
+    string theme = 3;
+    string clew = 4;
+    string phone = 5;
+    string token = 6;
+    string id = 7;
+}
+message AIYunHuInfo {
+    string dial_num = 1;
+    string dial_time = 2;
+    string theme = 3;
+    string clew = 4;
+    string phone = 5;
+    string token = 6;
+    string id = 7;
+}
 
+message Word {
+    string type = 1;
+    string user_id = 2;
+    string phone = 3;
+    string info = 4;
+}
 message Response {
     int32 errCode = 1;
     string errMsg = 2;
@@ -32,6 +80,3 @@ message LoginInfo{
     string code=2;
     string ip=3;
 }
-//message LoginResponse{
-//{"city":"广州","is_admin":"否","manufacturer_id":"4974a28ef6","manufacturer_name":"ALPINA","market_level":"B-M","market_type":"m_classify","province":"","status_code":0,"token":"67644D34E7EE3807D4CAEDE49A204FF79B759040321A408A5C7768B4511287A6","user_end_time":"2022-08-01"}
-//}

@@ -4,9 +4,11 @@ import (
 	"baliance.com/gooxml/document"
 	"encoding/json"
 	"fmt"
+	protobuf "github.com/golang/protobuf/proto"
 	"github.com/gomodule/redigo/redis"
 	"goMicro/service/common"
 	"goMicro/service/handler"
+	proto "goMicro/service/proto"
 	"gopkg.in/gomail.v2"
 	"log"
 	"math/rand"
@@ -14,16 +16,8 @@ import (
 	"time"
 )
 
-type orderInfo struct {
-	Userid       string `json:"userid"`
-	Location     string `json:"location"`
-	Hold_time    string `json:"hold_time"`
-	Preheat_time string `json:"preheat_time"`
-	Push_range   string `json:"push_range"`
-}
-
 func create_captcha() string {
-	return fmt.Sprintf("%03v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(1000))
+	return fmt.Sprintf("%04v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(10000))
 }
 func subs() {
 	conn := common.ConnectRedis()
@@ -48,15 +42,14 @@ func subs() {
 	}
 }
 func new_word(message []byte) string {
-	var order_info orderInfo
-	err := json.Unmarshal(message, &order_info)
-	if err != nil {
-		log.Fatalf("error opening Word: %s", err)
-	}
+	word := &proto.Word{}
+	protobuf.Unmarshal(message, word)
+	dataArr := map[string]string{}
+	json.Unmarshal([]byte(word.Info), &dataArr)
 	db := handler.CreateMySqlConnection()
 	defer db.Close()
 	sql := "SELECT user_name,user_company,phone,manufacturer_id FROM dealer_user WHERE id=?"
-	rows, _ := db.Query(sql, order_info.Userid)
+	rows, _ := db.Query(sql, word.UserId)
 	var user_info string
 	var user_name string
 	var user_company string
@@ -64,12 +57,12 @@ func new_word(message []byte) string {
 	var manufacturer_id string
 	var manufacturer_name string
 	for rows.Next() {
-		err = rows.Scan(&user_name, &user_company, &phone, &manufacturer_id)
+		rows.Scan(&user_name, &user_company, &phone, &manufacturer_id)
 		sql1 := "SELECT name FROM manufacturer_name WHERE id=?"
 		rows1, _ := db.Query(sql1, manufacturer_id)
 		for rows1.Next() {
-			err = rows1.Scan(&manufacturer_name)
-			user_info = "品牌名称： " + manufacturer_name + "  用户名称： " + user_name + "  用户公司： " + user_company + "  联系方式： " + phone
+			rows1.Scan(&manufacturer_name)
+			user_info = "品牌名称： " + manufacturer_name + "  用户名称： " + user_name + "  用户公司： " + user_company
 		}
 	}
 	doc := document.New()
@@ -77,15 +70,20 @@ func new_word(message []byte) string {
 	para.SetStyle("Subtitle")
 	para.AddRun().AddText(user_info)
 	para = doc.AddParagraph()
-	para.AddRun().AddText("活动地点：" + order_info.Location)
-	para = doc.AddParagraph()
-	para.AddRun().AddText("活动时间：" + order_info.Hold_time)
-	para = doc.AddParagraph()
-	para.AddRun().AddText("预热时间：" + order_info.Preheat_time)
-	para = doc.AddParagraph()
-	para.AddRun().AddText("推送范围：" + order_info.Push_range)
-	docxPath := "../docx/" + manufacturer_name + create_captcha() + ".docx"
+	para.AddRun().AddText("电话：" + word.Phone)
+	for i, j := range dataArr {
+		para = doc.AddParagraph()
+		para.AddRun().AddText(i + "：")
+		para.AddRun().AddText(j)
+	}
+	docxPath := "../docx/" + word.Type + "--" + manufacturer_name + create_captcha() + ".docx"
 	doc.SaveToFile(docxPath)
+	insert_sql := "INSERT INTO order_info(user_id,phone,user_name,file_path,order_type) VALUES(?,?,?,?,?)"
+	_, err1 := db.Exec(insert_sql, word.UserId, word.Phone, user_name, docxPath, word.Type)
+	if err1 != nil {
+		log.Println("插入失败")
+		log.Println(err1)
+	}
 	return docxPath
 }
 func send_email(docxPath string) error {

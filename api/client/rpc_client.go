@@ -22,54 +22,192 @@ func InitApiService() {
 }
 
 // 将本地调用，转换成 rpc 调用。如果数据结构不一致，这里会需要做数据结构的转换，包括传给 rpc 调用的参数，以及收到的返回结果。
-func CreateOrder(orderInfo appProto.OrderInfo) *appProto.Response {
+func CreateDingDianTui(orderInfo appProto.DingDianTuiInfo) *appProto.Response {
 	// 声明要找哪个 RPC 服务，以及绑定到哪个 client 数据结构上
 	// apiService 做发起 rpc 请求的一方，所以是 client
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : CreateOrder")
 	// 实际调用 rpc
-	resp, err := appService.CreateOrder(context.TODO(), &orderInfo)
+	resp, err := appService.CreateDingDianTui(context.TODO(), &orderInfo)
 	if err != nil {
 		println(err.Error())
 	}
 	return resp
 }
-func QueryOrders(orderId appProto.OrderInfo) *appProto.Response {
+func QueryDingDianTuis(orderId appProto.DingDianTuiInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : QueryOrders")
-	resp, err := appService.QueryOrders(context.TODO(), &orderId)
+	resp, err := appService.QueryDingDianTuis(context.TODO(), &orderId)
 	if err != nil {
 		println(err.Error())
 	}
 	return resp
 }
-func QueryOrder(orderId appProto.OrderInfo) *appProto.Response {
+func QueryDingDianTui(orderId appProto.DingDianTuiInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : QueryOrder")
-	resp, err := appService.QueryOrder(context.TODO(), &orderId)
+	resp, err := appService.QueryDingDianTui(context.TODO(), &orderId)
 	if err != nil {
 		println(err.Error())
 	}
 	return resp
 }
-func UpdateOrder(updateOrderInfo appProto.OrderInfo) *appProto.Response {
+func UpdateDingDianTui(updateOrderInfo appProto.DingDianTuiInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : UpdateOrder")
-	resp, err := appService.UpdateOrder(context.TODO(), &updateOrderInfo)
+	resp, err := appService.UpdateDingDianTui(context.TODO(), &updateOrderInfo)
 	if err != nil {
 		println(err.Error())
 	}
 	return resp
 }
-func DeleteOrder(orderId appProto.OrderInfo) *appProto.Response {
+func DeleteDingDianTui(orderId appProto.DingDianTuiInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : DeleteOrder")
-	resp, err := appService.DeleteOrder(context.TODO(), &orderId)
+	resp, err := appService.DeleteDingDianTui(context.TODO(), &orderId)
 	if err != nil {
 		println(err.Error())
 	}
 	return resp
 }
+func CreateChaoShiXin(orderInfo appProto.ChaoShiXinInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : CreateOrder")
+	// 实际调用 rpc
+	resp, err := appService.CreateChaoShiXin(context.TODO(), &orderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryChaoShiXins(orderId appProto.ChaoShiXinInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrders")
+	resp, err := appService.QueryChaoShiXins(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryChaoShiXin(orderId appProto.ChaoShiXinInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrder")
+	resp, err := appService.QueryChaoShiXin(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func UpdateChaoShiXin(updateOrderInfo appProto.ChaoShiXinInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : UpdateOrder")
+	resp, err := appService.UpdateChaoShiXin(context.TODO(), &updateOrderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func DeleteChaoShiXin(orderId appProto.ChaoShiXinInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : DeleteOrder")
+	resp, err := appService.DeleteChaoShiXin(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func CreateAIYunHu(orderInfo appProto.AIYunHuInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : CreateOrder")
+	// 实际调用 rpc
+	resp, err := appService.CreateAIYunHu(context.TODO(), &orderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryAIYunHus(orderId appProto.AIYunHuInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrders")
+	resp, err := appService.QueryAIYunHus(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryAIYunHu(orderId appProto.AIYunHuInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrder")
+	resp, err := appService.QueryAIYunHu(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func UpdateAIYunHu(updateOrderInfo appProto.AIYunHuInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : UpdateOrder")
+	resp, err := appService.UpdateAIYunHu(context.TODO(), &updateOrderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func DeleteAIYunHu(orderId appProto.AIYunHuInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : DeleteOrder")
+	resp, err := appService.DeleteAIYunHu(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func CreateKeLiuJing(orderInfo appProto.KeLiuJingInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : CreateOrder")
+	resp, err := appService.CreateKeLiuJing(context.TODO(), &orderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryKeLiuJings(orderId appProto.KeLiuJingInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrders")
+	resp, err := appService.QueryKeLiuJings(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryKeLiuJing(orderId appProto.KeLiuJingInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrder")
+	resp, err := appService.QueryKeLiuJing(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func UpdateKeLiuJing(updateOrderInfo appProto.KeLiuJingInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : UpdateOrder")
+	resp, err := appService.UpdateKeLiuJing(context.TODO(), &updateOrderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func DeleteKeLiuJing(orderId appProto.KeLiuJingInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : DeleteOrder")
+	resp, err := appService.DeleteKeLiuJing(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+
 func Login(loginInfo appProto.LoginInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : Login")
