@@ -23,8 +23,6 @@ func CreateMySqlConnection() *sql.DB {
 	port := configMap["port"]
 	DB, err = sql.Open(
 		"mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local&sql_mode=''", user, password, host, port, name))
-	//DB, err = sql.Open(
-	//	"mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local&sql_mode=''", "root", "chj981005", "111.230.154.86", "3306", "AutoAnalysis"))
 	DB.SetConnMaxLifetime(time.Second * 600)
 	DB.SetMaxIdleConns(25)
 	DB.SetMaxOpenConns(50)

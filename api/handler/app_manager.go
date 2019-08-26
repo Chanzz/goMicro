@@ -308,6 +308,81 @@ func (a *AppManager) DeleteChaoShiXin(c *gin.Context) {
 	resp := client.DeleteChaoShiXin(orderInfo)
 	c.JSON(200, resp)
 }
+func (a *AppManager) CreateCheShiChuang(c *gin.Context) {
+	var orderInfo appProto.CheShiChuangInfo
+	orderInfo.Token = c.Param("token")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.CreateCheShiChuang(orderInfo)
+	c.JSON(200, resp)
+}
+
+func (a *AppManager) QueryCheShiChuangs(c *gin.Context) {
+	var orderInfo appProto.CheShiChuangInfo
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryCheShiChuangs(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) QueryCheShiChuang(c *gin.Context) {
+	var orderInfo appProto.CheShiChuangInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryCheShiChuang(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) UpdateCheShiChuang(c *gin.Context) {
+	var orderInfo appProto.CheShiChuangInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.UpdateCheShiChuang(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) DeleteCheShiChuang(c *gin.Context) {
+	var orderInfo appProto.CheShiChuangInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.DeleteCheShiChuang(orderInfo)
+	c.JSON(200, resp)
+}
 
 func (a *AppManager) Login(c *gin.Context) {
 	var loginInfo appProto.LoginInfo

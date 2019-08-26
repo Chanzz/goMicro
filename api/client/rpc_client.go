@@ -207,6 +207,51 @@ func DeleteKeLiuJing(orderId appProto.KeLiuJingInfo) *appProto.Response {
 	}
 	return resp
 }
+func CreateCheShiChuang(orderInfo appProto.CheShiChuangInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : CreateOrder")
+	resp, err := appService.CreateCheShiChuang(context.TODO(), &orderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryCheShiChuangs(orderId appProto.CheShiChuangInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrders")
+	resp, err := appService.QueryCheShiChuangs(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func QueryCheShiChuang(orderId appProto.CheShiChuangInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : QueryOrder")
+	resp, err := appService.QueryCheShiChuang(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func UpdateCheShiChuang(updateOrderInfo appProto.CheShiChuangInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : UpdateOrder")
+	resp, err := appService.UpdateCheShiChuang(context.TODO(), &updateOrderInfo)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
+func DeleteCheShiChuang(orderId appProto.CheShiChuangInfo) *appProto.Response {
+	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
+	fmt.Printf("Create RPC client for : DeleteOrder")
+	resp, err := appService.DeleteCheShiChuang(context.TODO(), &orderId)
+	if err != nil {
+		println(err.Error())
+	}
+	return resp
+}
 
 func Login(loginInfo appProto.LoginInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())

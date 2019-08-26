@@ -62,7 +62,7 @@ func new_word(message []byte) string {
 		rows1, _ := db.Query(sql1, manufacturer_id)
 		for rows1.Next() {
 			rows1.Scan(&manufacturer_name)
-			user_info = "品牌名称： " + manufacturer_name + "  用户名称： " + user_name + "  用户公司： " + user_company
+			user_info = "品牌名称： " + manufacturer_name + "  用户名称： " + user_name + "  用户公司： " + user_company + "  联系方式： " + phone
 		}
 	}
 	doc := document.New()

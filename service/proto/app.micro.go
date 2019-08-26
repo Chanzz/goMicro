@@ -34,6 +34,11 @@ var _ server.Option
 // Client API for Order service
 
 type OrderService interface {
+	CreateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error)
+	QueryCheShiChuangs(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error)
+	QueryCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error)
+	UpdateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error)
+	DeleteCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error)
 	CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
 	QueryDingDianTuis(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
 	QueryDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error)
@@ -74,6 +79,56 @@ func NewOrderService(name string, c client.Client) OrderService {
 		c:    c,
 		name: name,
 	}
+}
+
+func (c *orderService) CreateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreateCheShiChuang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryCheShiChuangs(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryCheShiChuangs", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryCheShiChuang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) UpdateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdateCheShiChuang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) DeleteCheShiChuang(ctx context.Context, in *CheShiChuangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeleteCheShiChuang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *orderService) CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, opts ...client.CallOption) (*Response, error) {
@@ -299,6 +354,11 @@ func (c *orderService) SendCode(ctx context.Context, in *LoginInfo, opts ...clie
 // Server API for Order service
 
 type OrderHandler interface {
+	CreateCheShiChuang(context.Context, *CheShiChuangInfo, *Response) error
+	QueryCheShiChuangs(context.Context, *CheShiChuangInfo, *Response) error
+	QueryCheShiChuang(context.Context, *CheShiChuangInfo, *Response) error
+	UpdateCheShiChuang(context.Context, *CheShiChuangInfo, *Response) error
+	DeleteCheShiChuang(context.Context, *CheShiChuangInfo, *Response) error
 	CreateDingDianTui(context.Context, *DingDianTuiInfo, *Response) error
 	QueryDingDianTuis(context.Context, *DingDianTuiInfo, *Response) error
 	QueryDingDianTui(context.Context, *DingDianTuiInfo, *Response) error
@@ -325,6 +385,11 @@ type OrderHandler interface {
 
 func RegisterOrderHandler(s server.Server, hdlr OrderHandler, opts ...server.HandlerOption) error {
 	type order interface {
+		CreateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error
+		QueryCheShiChuangs(ctx context.Context, in *CheShiChuangInfo, out *Response) error
+		QueryCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error
+		UpdateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error
+		DeleteCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error
 		CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error
 		QueryDingDianTuis(ctx context.Context, in *DingDianTuiInfo, out *Response) error
 		QueryDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error
@@ -357,6 +422,26 @@ func RegisterOrderHandler(s server.Server, hdlr OrderHandler, opts ...server.Han
 
 type orderHandler struct {
 	OrderHandler
+}
+
+func (h *orderHandler) CreateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error {
+	return h.OrderHandler.CreateCheShiChuang(ctx, in, out)
+}
+
+func (h *orderHandler) QueryCheShiChuangs(ctx context.Context, in *CheShiChuangInfo, out *Response) error {
+	return h.OrderHandler.QueryCheShiChuangs(ctx, in, out)
+}
+
+func (h *orderHandler) QueryCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error {
+	return h.OrderHandler.QueryCheShiChuang(ctx, in, out)
+}
+
+func (h *orderHandler) UpdateCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error {
+	return h.OrderHandler.UpdateCheShiChuang(ctx, in, out)
+}
+
+func (h *orderHandler) DeleteCheShiChuang(ctx context.Context, in *CheShiChuangInfo, out *Response) error {
+	return h.OrderHandler.DeleteCheShiChuang(ctx, in, out)
 }
 
 func (h *orderHandler) CreateDingDianTui(ctx context.Context, in *DingDianTuiInfo, out *Response) error {

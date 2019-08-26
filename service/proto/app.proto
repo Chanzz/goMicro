@@ -3,6 +3,11 @@ syntax = "proto3";
 package goMicro.srv.order;
 
 service Order {
+    rpc CreateCheShiChuang (CheShiChuangInfo) returns (Response);
+    rpc QueryCheShiChuangs (CheShiChuangInfo) returns (Response);
+    rpc QueryCheShiChuang (CheShiChuangInfo) returns (Response);
+    rpc UpdateCheShiChuang (CheShiChuangInfo) returns (Response);
+    rpc DeleteCheShiChuang (CheShiChuangInfo) returns (Response);
     rpc CreateDingDianTui (DingDianTuiInfo) returns (Response);
     rpc QueryDingDianTuis (DingDianTuiInfo) returns (Response);
     rpc QueryDingDianTui (DingDianTuiInfo) returns (Response);
@@ -26,8 +31,22 @@ service Order {
     rpc Login (LoginInfo) returns (Response);
     rpc SendCode (LoginInfo) returns (Response);
 }
-
-
+message CheShiChuangInfo {
+    repeated string age = 1;
+    string car = 2;
+    repeated string makert = 3;
+    repeated string media = 4;
+    string model_type = 5;
+    string name = 6;
+    repeated string object = 7;
+    repeated string place = 8;
+    string price = 9;
+    repeated string sex = 10;
+    string strategy = 11;
+    repeated string time = 12;
+    string token = 13;
+    string id = 14;
+}
 message DingDianTuiInfo {
     string location = 1;
     string hold_time = 2;
@@ -75,8 +94,8 @@ message Response {
     string errMsg = 2;
     string info = 3;
 }
-message LoginInfo{
-    string phone_num=1;
-    string code=2;
-    string ip=3;
+message LoginInfo {
+    string phone_num = 1;
+    string code = 2;
+    string ip = 3;
 }
