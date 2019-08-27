@@ -475,7 +475,7 @@ func (d *AppDao) CreateCheShiChuang(ctx context.Context, in *proto.CheShiChuangI
 	word := &proto.Word{}
 	word.Type = "车视窗"
 	word.UserId = in.Token[0:32]
-	word.Info = "{\"推广计划名称\":\"" + in.Name + "\",\"投放时间\":\"{" + strings.Join(in.Time, ",") + "}\",\"价格\":\"" + in.Price + "\",\"地域\":\"{" + strings.Join(in.Place, ",") + "}\",\"媒体资源\":\"{" + strings.Join(in.Media, ",") + "}\",\"广告模式\":\"" + in.ModelType + "\",\"投放策略\":\"" + in.Strategy + "\",\"性别\":\"{" + strings.Join(in.Sex, ",") + "}\",\"年龄\":\"{" + strings.Join(in.Age, ",") + "}\",\"竞品车型\":\"{" + strings.Join(in.Object, ",") + "}\",\"竞品市场\":\"{" + strings.Join(in.Makert, ",") + "}\",\"本品车型\":\"" + in.Car + "\"}"
+	word.Info = "{\"推广计划名称\":\"" + in.Name + "\",\"投放时间\":\"" + strings.Join(in.Time, ",") + "\",\"价格\":\"" + in.Price + "\",\"地域\":\"" + in.Place + "\",\"媒体资源\":\"" + strings.Join(in.Media, ",") + "\",\"广告模式\":\"" + in.ModelType + "\",\"投放策略\":\"" + in.Strategy + "\",\"性别\":\"" + strings.Join(in.Sex, ",") + "\",\"年龄\":\"" + strings.Join(in.Age, ",") + "\",\"竞品车型\":\"" + strings.Join(in.Object, ",") + "\",\"竞品市场\":\"" + strings.Join(in.Makert, ",") + "\",\"本品车型\":\"" + in.Car + "\"}"
 	message, _ := protobuf.Marshal(word)
 	conn := common.ConnectRedis()
 	_, err := conn.Do("PUBLISH", "change_word", message)

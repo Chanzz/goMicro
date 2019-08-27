@@ -310,7 +310,7 @@ func (a *AppManager) DeleteChaoShiXin(c *gin.Context) {
 }
 func (a *AppManager) CreateCheShiChuang(c *gin.Context) {
 	var orderInfo appProto.CheShiChuangInfo
-	orderInfo.Token = c.Param("token")
+	orderInfo.Token = c.Query("token")
 	if err := c.ShouldBindJSON(&orderInfo); err != nil {
 		log.Println("err  :", err)
 		resp := new(appProto.Response)

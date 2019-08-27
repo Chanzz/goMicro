@@ -11,7 +11,7 @@ import (
 const CONFIG_FILE = "config.ini"
 
 func ConnectRedis() redis.Conn {
-	conn, err := redis.Dial("tcp", "127.0.0.1:6379")
+	conn, err := redis.Dial("tcp", "127.0.0.1:6666")
 	if err != nil {
 		log.Println(err)
 	}

@@ -39,7 +39,7 @@ message CheShiChuangInfo {
     string model_type = 5;
     string name = 6;
     repeated string object = 7;
-    repeated string place = 8;
+    string place = 8;
     string price = 9;
     repeated string sex = 10;
     string strategy = 11;
