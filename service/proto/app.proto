@@ -28,10 +28,27 @@ service Order {
     rpc QueryAIYunHu (AIYunHuInfo) returns (Response);
     rpc UpdateAIYunHu (AIYunHuInfo) returns (Response);
     rpc DeleteAIYunHu (AIYunHuInfo) returns (Response);
+    rpc CreatePinXiaoTong (PinXiaoTongInfo) returns (Response);
+    rpc QueryPinXiaoTongs (PinXiaoTongInfo) returns (Response);
+    rpc QueryPinXiaoTong (PinXiaoTongInfo) returns (Response);
+    rpc UpdatePinXiaoTong (PinXiaoTongInfo) returns (Response);
+    rpc DeletePinXiaoTong (PinXiaoTongInfo) returns (Response);
+    rpc CreateYunHuaXiang (YunHuaXiangInfo) returns (Response);
+    rpc QueryYunHuaXiangs (YunHuaXiangInfo) returns (Response);
+    rpc QueryYunHuaXiang (YunHuaXiangInfo) returns (Response);
+    rpc UpdateYunHuaXiang (YunHuaXiangInfo) returns (Response);
+    rpc DeleteYunHuaXiang (YunHuaXiangInfo) returns (Response);
+    rpc CreateWaQianKe (WaQianKeInfo) returns (Response);
+    rpc QueryWaQianKes (WaQianKeInfo) returns (Response);
+    rpc QueryWaQianKe (WaQianKeInfo) returns (Response);
+    rpc UpdateWaQianKe (WaQianKeInfo) returns (Response);
+    rpc DeleteWaQianKe (WaQianKeInfo) returns (Response);
     rpc Login (LoginInfo) returns (Response);
+    rpc User (UserInfo) returns (Response);
+    rpc Register (RegisterInfo) returns (Response);
     rpc SendCode (LoginInfo) returns (Response);
 }
-message CheShiChuangInfo {
+message PinXiaoTongInfo {
     repeated string age = 1;
     string car = 2;
     repeated string makert = 3;
@@ -82,12 +99,43 @@ message AIYunHuInfo {
     string token = 6;
     string id = 7;
 }
+message WaQianKeInfo {
+    string brand_user = 1;
+    string value_attribute = 2;
+    string sample_size = 3;
+    string phone = 4;
+    string token = 5;
+    string id = 6;
+}
+message CheShiChuangInfo {
+    string brand = 1;
+    string area = 2;
+    string open_time = 3;
+    string phone = 4;
+    string token = 5;
+    string id = 6;
+}
+message YunHuaXiangInfo {
+    string crowd_attribute = 1;
+    string sample_size = 2;
+    string recognition_information = 3;
+    string file = 4;
+    string vehicle_brand = 5;
+    string time_span = 6;
+    string city = 7;
+    string central_coordinates = 8;
+    string radius_range = 9;
+    string phone = 10;
+    string token = 11;
+    string id = 12;
+}
 
 message Word {
     string type = 1;
     string user_id = 2;
     string phone = 3;
     string info = 4;
+    string annex = 5;
 }
 message Response {
     int32 errCode = 1;
@@ -98,4 +146,15 @@ message LoginInfo {
     string phone_num = 1;
     string code = 2;
     string ip = 3;
+}
+message UserInfo {
+    string token = 1;
+}
+message RegisterInfo {
+    string company_name = 1;
+    string brand = 2;
+    string contact = 3;
+    string contact_number = 4;
+    string code = 5;
+    string ip = 6;
 }

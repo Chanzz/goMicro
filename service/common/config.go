@@ -4,14 +4,17 @@ import (
 	"crypto/md5"
 	"fmt"
 	"github.com/gomodule/redigo/redis"
+	"goMicro/service/handler"
 	"log"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 const CONFIG_FILE = "config.ini"
 
 func ConnectRedis() redis.Conn {
-	conn, err := redis.Dial("tcp", "127.0.0.1:6666")
+	conn, err := redis.Dial("tcp", "127.0.0.1:6379")
 	if err != nil {
 		log.Println(err)
 	}
@@ -22,6 +25,12 @@ func GenerateMD5(str string) string {
 	md5Bytes := md5.Sum(data)
 	md5Str := fmt.Sprintf("%x", md5Bytes) //将[]byte转成16进制
 	return strings.ToUpper(md5Str)
+}
+func Create_captcha() string {
+	return fmt.Sprintf("%04v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(10000))
+}
+func Get_mailbox() {
+	db := handler.CreateMySqlConnection()
 }
 
 //var m *AppConfig

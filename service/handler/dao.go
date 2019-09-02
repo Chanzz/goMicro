@@ -471,11 +471,13 @@ func (d *AppDao) QueryAIYunHu(ctx context.Context, in *proto.AIYunHuInfo, out *p
 	//out.ErrCode = 200
 	return nil
 }
+
 func (d *AppDao) CreateCheShiChuang(ctx context.Context, in *proto.CheShiChuangInfo, out *proto.Response) error {
 	word := &proto.Word{}
 	word.Type = "车视窗"
-	word.UserId = in.Token[0:32]
-	word.Info = "{\"推广计划名称\":\"" + in.Name + "\",\"投放时间\":\"" + strings.Join(in.Time, ",") + "\",\"价格\":\"" + in.Price + "\",\"地域\":\"" + in.Place + "\",\"媒体资源\":\"" + strings.Join(in.Media, ",") + "\",\"广告模式\":\"" + in.ModelType + "\",\"投放策略\":\"" + in.Strategy + "\",\"性别\":\"" + strings.Join(in.Sex, ",") + "\",\"年龄\":\"" + strings.Join(in.Age, ",") + "\",\"竞品车型\":\"" + strings.Join(in.Object, ",") + "\",\"竞品市场\":\"" + strings.Join(in.Makert, ",") + "\",\"本品车型\":\"" + in.Car + "\"}"
+	//word.UserId = in.Token[0:32]
+	word.Phone = in.Phone
+	word.Info = "{\"本品品牌\":\"" + in.Brand + "\",\"区域范围\":\"" + in.Area + "\",\"开通时间\":\"" + in.OpenTime + "\"}"
 	message, _ := protobuf.Marshal(word)
 	conn := common.ConnectRedis()
 	_, err := conn.Do("PUBLISH", "change_word", message)
@@ -582,6 +584,342 @@ func (d *AppDao) QueryCheShiChuang(ctx context.Context, in *proto.CheShiChuangIn
 	return nil
 }
 
+func (d *AppDao) CreateWaQianKe(ctx context.Context, in *proto.WaQianKeInfo, out *proto.Response) error {
+	word := &proto.Word{}
+	word.Type = "挖潜客"
+	word.UserId = in.Token[0:32]
+	word.Phone = in.Phone
+	word.Info = "{\"品牌用户\":\"" + in.BrandUser + "\",\"价值属性\":\"" + in.ValueAttribute + "\",\"样本数量\":\"" + in.SampleSize + "\"}"
+	message, _ := protobuf.Marshal(word)
+	conn := common.ConnectRedis()
+	_, err := conn.Do("PUBLISH", "change_word", message)
+
+	if err != nil {
+		log.Println(err)
+		out.ErrMsg = "提交失败"
+		out.ErrCode = 400
+		return nil
+	}
+	out.ErrMsg = "提交成功"
+	out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) UpdateWaQianKe(ctx context.Context, in *proto.WaQianKeInfo, out *proto.Response) error {
+	//update_sql := "UPDATE order_info SET location=?,hold_time=?,preheat_time=?,push_range=? WHERE id=? AND userid=?"
+	//_, err := d.DB.Exec(update_sql, in.Location, in.HoldTime, in.PreheatTime, in.PushRange, in.Id, in.Token[0:32])
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "更新失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.ErrMsg = "更新成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) DeleteWaQianKe(ctx context.Context, in *proto.WaQianKeInfo, out *proto.Response) error {
+	//delete_sql := "DELETE FROM order_info where id=? AND userid=?"
+	//_, err := d.DB.Exec(delete_sql, in.Id, in.Token[0:32])
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "删除失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.ErrMsg = "删除成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) QueryWaQianKes(ctx context.Context, in *proto.WaQianKeInfo, out *proto.Response) error {
+	//sql := "SELECT * FROM order_info WHERE userid=?"
+	//rows, err := d.DB.Query(sql, in.Token[0:32])
+	//defer rows.Close()
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//var info string
+	//info += "["
+	//for rows.Next() {
+	//	var token string
+	//	var location string
+	//	var hold_time string
+	//	var preheat_time string
+	//	var push_range string
+	//	var id string
+	//	var submit_time string
+	//	err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
+	//	info += "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'},"
+	//}
+	//info += "]"
+	//out.Info = info
+	//out.ErrMsg = "查询成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) QueryWaQianKe(ctx context.Context, in *proto.WaQianKeInfo, out *proto.Response) error {
+	//sql := "SELECT * FROM order_info WHERE id=? AND userid=?"
+	//rows, err := d.DB.Query(sql, in.Id, in.Token[0:32])
+	//defer rows.Close()
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//var info string
+	//for rows.Next() {
+	//	var token string
+	//	var location string
+	//	var hold_time string
+	//	var preheat_time string
+	//	var push_range string
+	//	var id string
+	//	var submit_time string
+	//	err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
+	//	info = "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'}"
+	//}
+	//if info == "" {
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.Info = info
+	//out.ErrMsg = "查询成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) CreatePinXiaoTong(ctx context.Context, in *proto.PinXiaoTongInfo, out *proto.Response) error {
+	word := &proto.Word{}
+	word.Type = "品效通"
+	word.UserId = in.Token[0:32]
+	word.Info = "{\"推广计划名称\":\"" + in.Name + "\",\"投放时间\":\"" + strings.Join(in.Time, ",") + "\",\"价格\":\"" + in.Price + "\",\"地域\":\"" + in.Place + "\",\"媒体资源\":\"" + strings.Join(in.Media, ",") + "\",\"广告模式\":\"" + in.ModelType + "\",\"投放策略\":\"" + in.Strategy + "\",\"性别\":\"" + strings.Join(in.Sex, ",") + "\",\"年龄\":\"" + strings.Join(in.Age, ",") + "\",\"竞品车型\":\"" + strings.Join(in.Object, ",") + "\",\"竞品市场\":\"" + strings.Join(in.Makert, ",") + "\",\"本品车型\":\"" + in.Car + "\"}"
+	message, _ := protobuf.Marshal(word)
+	conn := common.ConnectRedis()
+	_, err := conn.Do("PUBLISH", "change_word", message)
+
+	if err != nil {
+		log.Println(err)
+		out.ErrMsg = "提交失败"
+		out.ErrCode = 400
+		return nil
+	}
+	out.ErrMsg = "提交成功"
+	out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) UpdatePinXiaoTong(ctx context.Context, in *proto.PinXiaoTongInfo, out *proto.Response) error {
+	//update_sql := "UPDATE order_info SET location=?,hold_time=?,preheat_time=?,push_range=? WHERE id=? AND userid=?"
+	//_, err := d.DB.Exec(update_sql, in.Location, in.HoldTime, in.PreheatTime, in.PushRange, in.Id, in.Token[0:32])
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "更新失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.ErrMsg = "更新成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) DeletePinXiaoTong(ctx context.Context, in *proto.PinXiaoTongInfo, out *proto.Response) error {
+	//delete_sql := "DELETE FROM order_info where id=? AND userid=?"
+	//_, err := d.DB.Exec(delete_sql, in.Id, in.Token[0:32])
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "删除失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.ErrMsg = "删除成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) QueryPinXiaoTongs(ctx context.Context, in *proto.PinXiaoTongInfo, out *proto.Response) error {
+	//sql := "SELECT * FROM order_info WHERE userid=?"
+	//rows, err := d.DB.Query(sql, in.Token[0:32])
+	//defer rows.Close()
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//var info string
+	//info += "["
+	//for rows.Next() {
+	//	var token string
+	//	var location string
+	//	var hold_time string
+	//	var preheat_time string
+	//	var push_range string
+	//	var id string
+	//	var submit_time string
+	//	err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
+	//	info += "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'},"
+	//}
+	//info += "]"
+	//out.Info = info
+	//out.ErrMsg = "查询成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) QueryPinXiaoTong(ctx context.Context, in *proto.PinXiaoTongInfo, out *proto.Response) error {
+	//sql := "SELECT * FROM order_info WHERE id=? AND userid=?"
+	//rows, err := d.DB.Query(sql, in.Id, in.Token[0:32])
+	//defer rows.Close()
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//var info string
+	//for rows.Next() {
+	//	var token string
+	//	var location string
+	//	var hold_time string
+	//	var preheat_time string
+	//	var push_range string
+	//	var id string
+	//	var submit_time string
+	//	err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
+	//	info = "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'}"
+	//}
+	//if info == "" {
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.Info = info
+	//out.ErrMsg = "查询成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) CreateYunHuaXiang(ctx context.Context, in *proto.YunHuaXiangInfo, out *proto.Response) error {
+	word := &proto.Word{}
+	word.Type = "云画像"
+	word.UserId = in.Token[0:32]
+	word.Annex = in.File
+	word.Phone = in.Phone
+	word.Info = "{\"人群属性\":\"" + in.CrowdAttribute + "\",\"样本数量\":\"" + in.SampleSize + "\",\"识别信息\":\"" + in.File + "\",\"车型品牌\":\"" + in.VehicleBrand + "\",\"时间跨度\":\"" + in.TimeSpan + "\",\"所在城市\":\"" + in.City + "\",\"中心坐标\":\"" + in.CentralCoordinates + "\",\"半径范围\":\"" + in.RadiusRange + "\"}"
+	message, _ := protobuf.Marshal(word)
+	conn := common.ConnectRedis()
+	_, err := conn.Do("PUBLISH", "change_word", message)
+
+	if err != nil {
+		log.Println(err)
+		out.ErrMsg = "提交失败"
+		out.ErrCode = 400
+		return nil
+	}
+	out.ErrMsg = "提交成功"
+	out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) UpdateYunHuaXiang(ctx context.Context, in *proto.YunHuaXiangInfo, out *proto.Response) error {
+	//update_sql := "UPDATE order_info SET location=?,hold_time=?,preheat_time=?,push_range=? WHERE id=? AND userid=?"
+	//_, err := d.DB.Exec(update_sql, in.Location, in.HoldTime, in.PreheatTime, in.PushRange, in.Id, in.Token[0:32])
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "更新失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.ErrMsg = "更新成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) DeleteYunHuaXiang(ctx context.Context, in *proto.YunHuaXiangInfo, out *proto.Response) error {
+	//delete_sql := "DELETE FROM order_info where id=? AND userid=?"
+	//_, err := d.DB.Exec(delete_sql, in.Id, in.Token[0:32])
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "删除失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.ErrMsg = "删除成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) QueryYunHuaXiangs(ctx context.Context, in *proto.YunHuaXiangInfo, out *proto.Response) error {
+	//sql := "SELECT * FROM order_info WHERE userid=?"
+	//rows, err := d.DB.Query(sql, in.Token[0:32])
+	//defer rows.Close()
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//var info string
+	//info += "["
+	//for rows.Next() {
+	//	var token string
+	//	var location string
+	//	var hold_time string
+	//	var preheat_time string
+	//	var push_range string
+	//	var id string
+	//	var submit_time string
+	//	err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
+	//	info += "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'},"
+	//}
+	//info += "]"
+	//out.Info = info
+	//out.ErrMsg = "查询成功"
+	//out.ErrCode = 200
+	return nil
+}
+
+func (d *AppDao) QueryYunHuaXiang(ctx context.Context, in *proto.YunHuaXiangInfo, out *proto.Response) error {
+	//sql := "SELECT * FROM order_info WHERE id=? AND userid=?"
+	//rows, err := d.DB.Query(sql, in.Id, in.Token[0:32])
+	//defer rows.Close()
+	//if err != nil {
+	//	log.Println(err)
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//var info string
+	//for rows.Next() {
+	//	var token string
+	//	var location string
+	//	var hold_time string
+	//	var preheat_time string
+	//	var push_range string
+	//	var id string
+	//	var submit_time string
+	//	err = rows.Scan(&token, &location, &hold_time, &preheat_time, &push_range, &submit_time, &id)
+	//	info = "{'location':'" + location + "','hold_time':'" + hold_time + "','preheat_time':'" + preheat_time + "','push_range':'" + push_range + "','submit_time':'" + submit_time + "','id':'" + id + "'}"
+	//}
+	//if info == "" {
+	//	out.ErrMsg = "查询失败"
+	//	out.ErrCode = 400
+	//	return nil
+	//}
+	//out.Info = info
+	//out.ErrMsg = "查询成功"
+	//out.ErrCode = 200
+	return nil
+}
+
 func (d *AppDao) Login(ctx context.Context, in *proto.LoginInfo, out *proto.Response) error {
 	sql := "SELECT * FROM dealer_user WHERE phone=?"
 	err := d.DB.QueryRow(sql, in.PhoneNum)
@@ -610,5 +948,26 @@ func (d *AppDao) Login(ctx context.Context, in *proto.LoginInfo, out *proto.Resp
 	return nil
 }
 func (d *AppDao) SendCode(ctx context.Context, in *proto.LoginInfo, out *proto.Response) error {
+	return nil
+}
+func (d *AppDao) Register(ctx context.Context, in *proto.RegisterInfo, out *proto.Response) error {
+	return nil
+}
+func (d *AppDao) User(ctx context.Context, in *proto.UserInfo, out *proto.Response) error {
+	sql := "SELECT user_end_time,role FROM dealer_user WHERE id=?"
+	rows, err := d.DB.Query(sql, in.Token[0:32])
+	if err != nil {
+		out.ErrCode = 400
+		out.ErrMsg = "查询失败"
+		return nil
+	}
+	var user_end_time string
+	var role string
+	for rows.Next() {
+		rows.Scan(&user_end_time, &role)
+		out.Info = "{user_end_time:" + user_end_time + ",role:" + role + "}"
+	}
+	out.ErrCode = 200
+	out.ErrMsg = "查询成功"
 	return nil
 }

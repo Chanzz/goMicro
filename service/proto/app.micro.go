@@ -59,7 +59,24 @@ type OrderService interface {
 	QueryAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
 	UpdateAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
 	DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, opts ...client.CallOption) (*Response, error)
+	CreatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error)
+	QueryPinXiaoTongs(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error)
+	QueryPinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error)
+	UpdatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error)
+	DeletePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error)
+	CreateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error)
+	QueryYunHuaXiangs(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error)
+	QueryYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error)
+	UpdateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error)
+	DeleteYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error)
+	CreateWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error)
+	QueryWaQianKes(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error)
+	QueryWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error)
+	UpdateWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error)
+	DeleteWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error)
 	Login(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error)
+	User(ctx context.Context, in *UserInfo, opts ...client.CallOption) (*Response, error)
+	Register(ctx context.Context, in *RegisterInfo, opts ...client.CallOption) (*Response, error)
 	SendCode(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error)
 }
 
@@ -331,8 +348,178 @@ func (c *orderService) DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, opts 
 	return out, nil
 }
 
+func (c *orderService) CreatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreatePinXiaoTong", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryPinXiaoTongs(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryPinXiaoTongs", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryPinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryPinXiaoTong", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) UpdatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdatePinXiaoTong", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) DeletePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeletePinXiaoTong", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) CreateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreateYunHuaXiang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryYunHuaXiangs(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryYunHuaXiangs", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryYunHuaXiang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) UpdateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdateYunHuaXiang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) DeleteYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeleteYunHuaXiang", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) CreateWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.CreateWaQianKe", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryWaQianKes(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryWaQianKes", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) QueryWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.QueryWaQianKe", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) UpdateWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.UpdateWaQianKe", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) DeleteWaQianKe(ctx context.Context, in *WaQianKeInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.DeleteWaQianKe", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orderService) Login(ctx context.Context, in *LoginInfo, opts ...client.CallOption) (*Response, error) {
 	req := c.c.NewRequest(c.name, "Order.Login", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) User(ctx context.Context, in *UserInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.User", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderService) Register(ctx context.Context, in *RegisterInfo, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "Order.Register", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -379,7 +566,24 @@ type OrderHandler interface {
 	QueryAIYunHu(context.Context, *AIYunHuInfo, *Response) error
 	UpdateAIYunHu(context.Context, *AIYunHuInfo, *Response) error
 	DeleteAIYunHu(context.Context, *AIYunHuInfo, *Response) error
+	CreatePinXiaoTong(context.Context, *PinXiaoTongInfo, *Response) error
+	QueryPinXiaoTongs(context.Context, *PinXiaoTongInfo, *Response) error
+	QueryPinXiaoTong(context.Context, *PinXiaoTongInfo, *Response) error
+	UpdatePinXiaoTong(context.Context, *PinXiaoTongInfo, *Response) error
+	DeletePinXiaoTong(context.Context, *PinXiaoTongInfo, *Response) error
+	CreateYunHuaXiang(context.Context, *YunHuaXiangInfo, *Response) error
+	QueryYunHuaXiangs(context.Context, *YunHuaXiangInfo, *Response) error
+	QueryYunHuaXiang(context.Context, *YunHuaXiangInfo, *Response) error
+	UpdateYunHuaXiang(context.Context, *YunHuaXiangInfo, *Response) error
+	DeleteYunHuaXiang(context.Context, *YunHuaXiangInfo, *Response) error
+	CreateWaQianKe(context.Context, *WaQianKeInfo, *Response) error
+	QueryWaQianKes(context.Context, *WaQianKeInfo, *Response) error
+	QueryWaQianKe(context.Context, *WaQianKeInfo, *Response) error
+	UpdateWaQianKe(context.Context, *WaQianKeInfo, *Response) error
+	DeleteWaQianKe(context.Context, *WaQianKeInfo, *Response) error
 	Login(context.Context, *LoginInfo, *Response) error
+	User(context.Context, *UserInfo, *Response) error
+	Register(context.Context, *RegisterInfo, *Response) error
 	SendCode(context.Context, *LoginInfo, *Response) error
 }
 
@@ -410,7 +614,24 @@ func RegisterOrderHandler(s server.Server, hdlr OrderHandler, opts ...server.Han
 		QueryAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error
 		UpdateAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error
 		DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, out *Response) error
+		CreatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error
+		QueryPinXiaoTongs(ctx context.Context, in *PinXiaoTongInfo, out *Response) error
+		QueryPinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error
+		UpdatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error
+		DeletePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error
+		CreateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error
+		QueryYunHuaXiangs(ctx context.Context, in *YunHuaXiangInfo, out *Response) error
+		QueryYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error
+		UpdateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error
+		DeleteYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error
+		CreateWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error
+		QueryWaQianKes(ctx context.Context, in *WaQianKeInfo, out *Response) error
+		QueryWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error
+		UpdateWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error
+		DeleteWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error
 		Login(ctx context.Context, in *LoginInfo, out *Response) error
+		User(ctx context.Context, in *UserInfo, out *Response) error
+		Register(ctx context.Context, in *RegisterInfo, out *Response) error
 		SendCode(ctx context.Context, in *LoginInfo, out *Response) error
 	}
 	type Order struct {
@@ -524,8 +745,76 @@ func (h *orderHandler) DeleteAIYunHu(ctx context.Context, in *AIYunHuInfo, out *
 	return h.OrderHandler.DeleteAIYunHu(ctx, in, out)
 }
 
+func (h *orderHandler) CreatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error {
+	return h.OrderHandler.CreatePinXiaoTong(ctx, in, out)
+}
+
+func (h *orderHandler) QueryPinXiaoTongs(ctx context.Context, in *PinXiaoTongInfo, out *Response) error {
+	return h.OrderHandler.QueryPinXiaoTongs(ctx, in, out)
+}
+
+func (h *orderHandler) QueryPinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error {
+	return h.OrderHandler.QueryPinXiaoTong(ctx, in, out)
+}
+
+func (h *orderHandler) UpdatePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error {
+	return h.OrderHandler.UpdatePinXiaoTong(ctx, in, out)
+}
+
+func (h *orderHandler) DeletePinXiaoTong(ctx context.Context, in *PinXiaoTongInfo, out *Response) error {
+	return h.OrderHandler.DeletePinXiaoTong(ctx, in, out)
+}
+
+func (h *orderHandler) CreateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error {
+	return h.OrderHandler.CreateYunHuaXiang(ctx, in, out)
+}
+
+func (h *orderHandler) QueryYunHuaXiangs(ctx context.Context, in *YunHuaXiangInfo, out *Response) error {
+	return h.OrderHandler.QueryYunHuaXiangs(ctx, in, out)
+}
+
+func (h *orderHandler) QueryYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error {
+	return h.OrderHandler.QueryYunHuaXiang(ctx, in, out)
+}
+
+func (h *orderHandler) UpdateYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error {
+	return h.OrderHandler.UpdateYunHuaXiang(ctx, in, out)
+}
+
+func (h *orderHandler) DeleteYunHuaXiang(ctx context.Context, in *YunHuaXiangInfo, out *Response) error {
+	return h.OrderHandler.DeleteYunHuaXiang(ctx, in, out)
+}
+
+func (h *orderHandler) CreateWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error {
+	return h.OrderHandler.CreateWaQianKe(ctx, in, out)
+}
+
+func (h *orderHandler) QueryWaQianKes(ctx context.Context, in *WaQianKeInfo, out *Response) error {
+	return h.OrderHandler.QueryWaQianKes(ctx, in, out)
+}
+
+func (h *orderHandler) QueryWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error {
+	return h.OrderHandler.QueryWaQianKe(ctx, in, out)
+}
+
+func (h *orderHandler) UpdateWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error {
+	return h.OrderHandler.UpdateWaQianKe(ctx, in, out)
+}
+
+func (h *orderHandler) DeleteWaQianKe(ctx context.Context, in *WaQianKeInfo, out *Response) error {
+	return h.OrderHandler.DeleteWaQianKe(ctx, in, out)
+}
+
 func (h *orderHandler) Login(ctx context.Context, in *LoginInfo, out *Response) error {
 	return h.OrderHandler.Login(ctx, in, out)
+}
+
+func (h *orderHandler) User(ctx context.Context, in *UserInfo, out *Response) error {
+	return h.OrderHandler.User(ctx, in, out)
+}
+
+func (h *orderHandler) Register(ctx context.Context, in *RegisterInfo, out *Response) error {
+	return h.OrderHandler.Register(ctx, in, out)
 }
 
 func (h *orderHandler) SendCode(ctx context.Context, in *LoginInfo, out *Response) error {

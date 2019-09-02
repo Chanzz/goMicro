@@ -11,14 +11,9 @@ import (
 	proto "goMicro/service/proto"
 	"gopkg.in/gomail.v2"
 	"log"
-	"math/rand"
 	"strconv"
-	"time"
 )
 
-func create_captcha() string {
-	return fmt.Sprintf("%04v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(10000))
-}
 func subs() {
 	conn := common.ConnectRedis()
 	defer conn.Close()
@@ -28,8 +23,8 @@ func subs() {
 		switch v := psc.Receive().(type) {
 		case redis.Message:
 			fmt.Printf("%s: message: %s\n", v.Channel, v.Data)
-			docxPath := new_word(v.Data)
-			err := send_email(docxPath)
+			docxPath, excelPath := new_word(v.Data)
+			err := send_email(docxPath, excelPath)
 			if err != nil {
 				log.Println(err)
 			}
@@ -41,7 +36,7 @@ func subs() {
 		}
 	}
 }
-func new_word(message []byte) string {
+func new_word(message []byte) (string, string) {
 	word := &proto.Word{}
 	protobuf.Unmarshal(message, word)
 	dataArr := map[string]string{}
@@ -68,7 +63,9 @@ func new_word(message []byte) string {
 	doc := document.New()
 	para := doc.AddParagraph()
 	para.SetStyle("Subtitle")
-	para.AddRun().AddText(user_info)
+	if word.UserId != "" {
+		para.AddRun().AddText(user_info)
+	}
 	para = doc.AddParagraph()
 	para.AddRun().AddText("电话：" + word.Phone)
 	for i, j := range dataArr {
@@ -76,7 +73,7 @@ func new_word(message []byte) string {
 		para.AddRun().AddText(i + "：")
 		para.AddRun().AddText(j)
 	}
-	docxPath := "../docx/" + word.Type + "--" + manufacturer_name + create_captcha() + ".docx"
+	docxPath := "../docx/" + word.Type + "--" + manufacturer_name + common.Create_captcha() + ".docx"
 	doc.SaveToFile(docxPath)
 	insert_sql := "INSERT INTO order_info(user_id,phone,user_name,file_path,order_type) VALUES(?,?,?,?,?)"
 	_, err1 := db.Exec(insert_sql, word.UserId, word.Phone, user_name, docxPath, word.Type)
@@ -84,9 +81,9 @@ func new_word(message []byte) string {
 		log.Println("插入失败")
 		log.Println(err1)
 	}
-	return docxPath
+	return docxPath, word.Annex
 }
-func send_email(docxPath string) error {
+func send_email(docxPath string, excelPath string) error {
 	configMap := common.GetConfigMap("email")
 	user := configMap["user"]
 	password := configMap["passwd"]
@@ -95,10 +92,14 @@ func send_email(docxPath string) error {
 	m := gomail.NewMessage()
 	m.SetHeader("From", "<"+"haoji_chen@data-spark.cn"+">")
 	m.SetHeader("To", "295218321@qq.com") //发送给多个用户
-	m.SetHeader("Subject", "测试")          //设置邮件主题
-	m.SetBody("text/html", "测试")          //设置邮件正文
+	subject := "订单请求--" + docxPath[8:]
+	m.SetHeader("Subject", subject) //设置邮件主题
+	m.SetBody("text/html", "请查收附件") //设置邮件正文
 	d := gomail.NewDialer(host, port, user, password)
 	m.Attach(docxPath)
+	if excelPath != "" {
+		m.Attach(excelPath)
+	}
 	err := d.DialAndSend(m)
 	return err
 }

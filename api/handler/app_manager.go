@@ -3,11 +3,13 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"goMicro/api/client"
+	"goMicro/service/common"
 	appProto "goMicro/service/proto"
 	"log"
 )
 
-type AppManager struct{}
+type AppManager struct {
+}
 
 func (a *AppManager) CreateDingDianTui(c *gin.Context) {
 	var orderInfo appProto.DingDianTuiInfo
@@ -308,9 +310,83 @@ func (a *AppManager) DeleteChaoShiXin(c *gin.Context) {
 	resp := client.DeleteChaoShiXin(orderInfo)
 	c.JSON(200, resp)
 }
+func (a *AppManager) CreatePinXiaoTong(c *gin.Context) {
+	var orderInfo appProto.PinXiaoTongInfo
+	orderInfo.Token = c.Query("token")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.CreatePinXiaoTong(orderInfo)
+	c.JSON(200, resp)
+}
+
+func (a *AppManager) QueryPinXiaoTongs(c *gin.Context) {
+	var orderInfo appProto.PinXiaoTongInfo
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryPinXiaoTongs(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) QueryPinXiaoTong(c *gin.Context) {
+	var orderInfo appProto.PinXiaoTongInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryPinXiaoTong(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) UpdatePinXiaoTong(c *gin.Context) {
+	var orderInfo appProto.PinXiaoTongInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.UpdatePinXiaoTong(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) DeletePinXiaoTong(c *gin.Context) {
+	var orderInfo appProto.PinXiaoTongInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.DeletePinXiaoTong(orderInfo)
+	c.JSON(200, resp)
+}
 func (a *AppManager) CreateCheShiChuang(c *gin.Context) {
 	var orderInfo appProto.CheShiChuangInfo
-	orderInfo.Token = c.Query("token")
 	if err := c.ShouldBindJSON(&orderInfo); err != nil {
 		log.Println("err  :", err)
 		resp := new(appProto.Response)
@@ -383,6 +459,155 @@ func (a *AppManager) DeleteCheShiChuang(c *gin.Context) {
 	resp := client.DeleteCheShiChuang(orderInfo)
 	c.JSON(200, resp)
 }
+func (a *AppManager) CreateWaQianKe(c *gin.Context) {
+	var orderInfo appProto.WaQianKeInfo
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.CreateWaQianKe(orderInfo)
+	c.JSON(200, resp)
+}
+
+func (a *AppManager) QueryWaQianKes(c *gin.Context) {
+	var orderInfo appProto.WaQianKeInfo
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryWaQianKes(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) QueryWaQianKe(c *gin.Context) {
+	var orderInfo appProto.WaQianKeInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryWaQianKe(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) UpdateWaQianKe(c *gin.Context) {
+	var orderInfo appProto.WaQianKeInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.UpdateWaQianKe(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) DeleteWaQianKe(c *gin.Context) {
+	var orderInfo appProto.WaQianKeInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.DeleteWaQianKe(orderInfo)
+	c.JSON(200, resp)
+}
+
+func (a *AppManager) CreateYunHuaXiang(c *gin.Context) {
+	var orderInfo appProto.YunHuaXiangInfo
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.CreateYunHuaXiang(orderInfo)
+	c.JSON(200, resp)
+}
+
+func (a *AppManager) QueryYunHuaXiangs(c *gin.Context) {
+	var orderInfo appProto.YunHuaXiangInfo
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryYunHuaXiangs(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) QueryYunHuaXiang(c *gin.Context) {
+	var orderInfo appProto.YunHuaXiangInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.QueryYunHuaXiang(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) UpdateYunHuaXiang(c *gin.Context) {
+	var orderInfo appProto.YunHuaXiangInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.UpdateYunHuaXiang(orderInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) DeleteYunHuaXiang(c *gin.Context) {
+	var orderInfo appProto.YunHuaXiangInfo
+	orderInfo.Id = c.Param("id")
+	if err := c.ShouldBindJSON(&orderInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.DeleteYunHuaXiang(orderInfo)
+	c.JSON(200, resp)
+}
 
 func (a *AppManager) Login(c *gin.Context) {
 	var loginInfo appProto.LoginInfo
@@ -397,6 +622,42 @@ func (a *AppManager) Login(c *gin.Context) {
 		return
 	}
 	resp := client.Login(loginInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) UploadFile(c *gin.Context) {
+	file, _ := c.FormFile("file")
+	path := "../attach/" + common.Create_captcha() + file.Filename
+	err := c.SaveUploadedFile(file, path)
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(400, err)
+		c.Abort()
+	}
+	resp := new(appProto.Response)
+	resp.ErrMsg = "成功"
+	resp.ErrCode = 200
+	resp.Info = path
+	c.JSON(200, resp)
+}
+func (a *AppManager) UserInfo(c *gin.Context) {
+	var userInfo appProto.UserInfo
+	userInfo.Token = c.Query("token")
+	resp := client.UserInfo(userInfo)
+	c.JSON(200, resp)
+}
+func (a *AppManager) Register(c *gin.Context) {
+	var RegisterInfo appProto.RegisterInfo
+	RegisterInfo.Ip = c.ClientIP()
+	if err := c.ShouldBindJSON(&RegisterInfo); err != nil {
+		log.Println("err  :", err)
+		resp := new(appProto.Response)
+		resp.ErrMsg = "请求错误"
+		resp.ErrCode = 400
+		c.JSON(400, resp)
+		c.Abort()
+		return
+	}
+	resp := client.Register(RegisterInfo)
 	c.JSON(200, resp)
 }
 func (a *AppManager) SendCode(c *gin.Context) {
