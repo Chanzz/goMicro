@@ -23,8 +23,8 @@ func subs() {
 		switch v := psc.Receive().(type) {
 		case redis.Message:
 			fmt.Printf("%s: message: %s\n", v.Channel, v.Data)
-			docxPath, excelPath := new_word(v.Data)
-			err := send_email(docxPath, excelPath)
+			docxPath, excelPath, word_type := new_word(v.Data)
+			err := send_email(docxPath, excelPath, word_type)
 			if err != nil {
 				log.Println(err)
 			}
@@ -36,7 +36,7 @@ func subs() {
 		}
 	}
 }
-func new_word(message []byte) (string, string) {
+func new_word(message []byte) (string, string, string) {
 	word := &proto.Word{}
 	protobuf.Unmarshal(message, word)
 	dataArr := map[string]string{}
@@ -81,9 +81,16 @@ func new_word(message []byte) (string, string) {
 		log.Println("插入失败")
 		log.Println(err1)
 	}
-	return docxPath, word.Annex
+	return docxPath, word.Annex, word.Type
 }
-func send_email(docxPath string, excelPath string) error {
+func send_email(docxPath string, excelPath string, word_type string) error {
+	db := handler.CreateMySqlConnection()
+	sql := "SELECT mailbox FROM product_mailbox WHERE product_name=?"
+	rows, _ := db.Query(sql, word_type)
+	var mailbox string
+	for rows.Next() {
+		rows.Scan(&mailbox)
+	}
 	configMap := common.GetConfigMap("email")
 	user := configMap["user"]
 	password := configMap["passwd"]
@@ -91,7 +98,7 @@ func send_email(docxPath string, excelPath string) error {
 	port, _ := strconv.Atoi(configMap["port"]) //转换端口类型为int
 	m := gomail.NewMessage()
 	m.SetHeader("From", "<"+"haoji_chen@data-spark.cn"+">")
-	m.SetHeader("To", "295218321@qq.com") //发送给多个用户
+	m.SetHeader("To", mailbox) //发送给多个用户
 	subject := "订单请求--" + docxPath[8:]
 	m.SetHeader("Subject", subject) //设置邮件主题
 	m.SetBody("text/html", "请查收附件") //设置邮件正文

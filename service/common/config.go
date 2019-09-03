@@ -4,7 +4,6 @@ import (
 	"crypto/md5"
 	"fmt"
 	"github.com/gomodule/redigo/redis"
-	"goMicro/service/handler"
 	"log"
 	"math/rand"
 	"strings"
@@ -28,9 +27,6 @@ func GenerateMD5(str string) string {
 }
 func Create_captcha() string {
 	return fmt.Sprintf("%04v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(10000))
-}
-func Get_mailbox() {
-	db := handler.CreateMySqlConnection()
 }
 
 //var m *AppConfig

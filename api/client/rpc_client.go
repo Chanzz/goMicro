@@ -388,19 +388,19 @@ func DeleteWaQianKe(orderId appProto.WaQianKeInfo) *appProto.Response {
 	return resp
 }
 
-func Register(loginInfo appProto.RegisterInfo) *appProto.Response {
+func Register(registerInfo appProto.RegisterInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : Register")
-	resp, err := appService.Register(context.TODO(), &loginInfo)
+	resp, err := appService.Register(context.TODO(), &registerInfo)
 	if err != nil {
 		println(err.Error())
 	}
 	return resp
 }
-func UserInfo(UserInfo appProto.UserInfo) *appProto.Response {
+func UserInfo(userInfo appProto.UserInfo) *appProto.Response {
 	appService := appProto.NewOrderService(APP_SERVICE_NAME, apiService.Client())
 	fmt.Printf("Create RPC client for : UserInfo")
-	resp, err := appService.User(context.TODO(), &UserInfo)
+	resp, err := appService.User(context.TODO(), &userInfo)
 	if err != nil {
 		println(err.Error())
 	}

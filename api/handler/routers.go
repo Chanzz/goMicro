@@ -9,7 +9,7 @@ func WebService() *gin.Engine {
 	api.POST("/upload", appManager.UploadFile)
 	user := api.Group("/user")
 	user.GET("/info", appManager.UserInfo)
-	//user.POST("/register", appManager.Register)
+	user.POST("/register", appManager.Register)
 	//user.POST("/login", appManager.Login)
 	//user.POST("/send_code", appManager.SendCode)
 	dingdiantui := api.Group("/dingdiantui")

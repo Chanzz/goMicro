@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	_ "github.com/go-sql-driver/mysql"
 	protobuf "github.com/golang/protobuf/proto"
 	"github.com/micro/go-micro"
@@ -951,21 +952,43 @@ func (d *AppDao) SendCode(ctx context.Context, in *proto.LoginInfo, out *proto.R
 	return nil
 }
 func (d *AppDao) Register(ctx context.Context, in *proto.RegisterInfo, out *proto.Response) error {
+	word := &proto.Word{}
+	word.Type = "注册"
+	word.Phone = in.ContactNumber
+	word.Info = "{\"公司名称\":\"" + in.CompanyName + "\",\"代理品牌\":\"" + in.Brand + "\",\"联系人员\":\"" + in.Contact + "\"}"
+	message, _ := protobuf.Marshal(word)
+	conn := common.ConnectRedis()
+	_, err := conn.Do("PUBLISH", "change_word", message)
+
+	if err != nil {
+		log.Println(err)
+		out.ErrMsg = "提交失败"
+		out.ErrCode = 400
+		return nil
+	}
+	out.ErrMsg = "提交成功"
+	out.ErrCode = 200
 	return nil
 }
 func (d *AppDao) User(ctx context.Context, in *proto.UserInfo, out *proto.Response) error {
-	sql := "SELECT user_end_time,role FROM dealer_user WHERE id=?"
+	sql := "SELECT user_end_time,role,user_name FROM dealer_user WHERE id=?"
 	rows, err := d.DB.Query(sql, in.Token[0:32])
 	if err != nil {
+		log.Println(err)
 		out.ErrCode = 400
 		out.ErrMsg = "查询失败"
 		return nil
 	}
-	var user_end_time string
-	var role string
+	type User struct {
+		User_end_time string `json:"user_end_time"`
+		Role          string `json:"role"`
+		User_name     string `json:"user_name"`
+	}
+	user := new(User)
 	for rows.Next() {
-		rows.Scan(&user_end_time, &role)
-		out.Info = "{user_end_time:" + user_end_time + ",role:" + role + "}"
+		rows.Scan(&user.User_end_time, &user.Role, &user.User_name)
+		jsonUser, _ := json.Marshal(user)
+		out.Info = string(jsonUser)
 	}
 	out.ErrCode = 200
 	out.ErrMsg = "查询成功"
