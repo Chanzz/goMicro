@@ -12,6 +12,7 @@ import (
 	"gopkg.in/gomail.v2"
 	"log"
 	"strconv"
+	"strings"
 )
 
 func subs() {
@@ -87,20 +88,24 @@ func send_email(docxPath string, excelPath string, word_type string) error {
 	db := handler.CreateMySqlConnection()
 	sql := "SELECT mailbox FROM product_mailbox WHERE product_name=?"
 	rows, _ := db.Query(sql, word_type)
-	var mailbox string
+	var mailbox_string string
 	for rows.Next() {
-		rows.Scan(&mailbox)
+		rows.Scan(&mailbox_string)
 	}
+	mailbox := strings.Split(mailbox_string, ",")
 	configMap := common.GetConfigMap("email")
 	user := configMap["user"]
 	password := configMap["passwd"]
 	host := configMap["host"]
 	port, _ := strconv.Atoi(configMap["port"]) //转换端口类型为int
 	m := gomail.NewMessage()
-	m.SetHeader("From", "<"+"haoji_chen@data-spark.cn"+">")
-	m.SetHeader("To", mailbox) //发送给多个用户
 	subject := "订单请求--" + docxPath[8:]
-	m.SetHeader("Subject", subject) //设置邮件主题
+	log.Println(mailbox)
+	m.SetHeaders(map[string][]string{
+		"From":    {"<" + "haoji_chen@data-spark.cn" + ">"},
+		"To":      mailbox,
+		"Subject": {subject},
+	})
 	m.SetBody("text/html", "请查收附件") //设置邮件正文
 	d := gomail.NewDialer(host, port, user, password)
 	m.Attach(docxPath)
